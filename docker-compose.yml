@@ -1,0 +1,28 @@
+version: '3.8'
+services:
+
+  scraper:
+    build:
+      context: ./scraper
+    container_name:  scraper
+    restart: unless-stopped
+    env_file: ./scraper/.env
+    expose:
+      - 3000
+    networks:
+      - default
+
+  lead-detector:
+    build:
+      context: ./lead-detector
+    container_name: lead-detector
+    #restart: unless-stopped
+    env_file: ./lead-detector/.env
+    volumes:
+      - ./result:/usr/src/app/data
+    networks:
+      - default
+
+networks:
+  default:
+    name: aigentx
